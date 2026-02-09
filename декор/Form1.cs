@@ -23,7 +23,7 @@ namespace декор
             if (MyClass.ConnectionBD.ConnectBd() == false){
                 this.Close();   
             }
-            ConnectionBD.CardListProduction(flowLayoutPanel1);
+            OutputCardProduct.CardListProduction(flowLayoutPanel1);
         }
 
         private void button1_Click(object sender, EventArgs e)

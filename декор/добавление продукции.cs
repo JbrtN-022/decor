@@ -22,8 +22,8 @@ namespace декор
         private string selectedPhotoPath = "";
         private void добавление_продукции_Load(object sender, EventArgs e)
         {
-            ConnectionBD.TipProductCombobox();
-            ConnectionBD.SizePackagingCombobox();
+            OutputCardProduct.TipProductCombobox();
+            OutputCardProduct.SizePackagingCombobox();
 
             comboBoxSize.DataSource = ConnectionBD.dtSizePackagingCombobox;
             comboBoxSize.DisplayMember = "размер";
@@ -66,6 +66,8 @@ namespace декор
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            string typeProd = (comboBoxTipProd.SelectedValue).ToString();
+            MessageBox.Show(typeProd);
 
         }
     }

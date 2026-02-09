@@ -15,14 +15,14 @@ namespace декор.MyClass
             try
             {
                 panel.Controls.Clear();
-                mySqlCommand.CommandText = @"
+                ConnectionBD.mySqlCommand.CommandText = @"
                 SELECT 
                     пр.артикул,
                     тп.название_т_п,
                     пр.наименование,
                     пр.мин_стоимость,
                     пр.размер,
-                    (SELECT SUM(м.стоиомсть * прв.`Необход кол м.`)
+                    (SELECT SUM(м.стоиомсть * прв.НеобходКолМат)
                      FROM up_02_2_1.производство прв
                      JOIN up_02_2_1.материалы м ON прв.id_материалы = м.id_материалы
                      WHERE прв.артикул = пр.артикул) as 'стоимость_материалов'
@@ -32,7 +32,7 @@ namespace декор.MyClass
                     up_02_2_1.с_тип_продукции тп 
                     ON пр.id_тип_продукции = тп.id_тип_продукции
                 ";
-                using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                using (MySqlDataReader reader = ConnectionBD.mySqlCommand.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -76,9 +76,9 @@ namespace декор.MyClass
         {
             try
             {
-                mySqlCommand.CommandText = @"SELECT * FROM up_02_2_1.с_тип_продукции;";
-                dtTipProductCombobox.Clear();
-                mySqlDataAdapter.Fill(dtTipProductCombobox);
+                ConnectionBD.mySqlCommand.CommandText = @"SELECT * FROM up_02_2_1.с_тип_продукции;";
+                ConnectionBD.dtTipProductCombobox.Clear();
+                ConnectionBD.mySqlDataAdapter.Fill(ConnectionBD.dtTipProductCombobox);
                 return true;
             }
             catch
@@ -90,9 +90,9 @@ namespace декор.MyClass
         {
             try
             {
-                mySqlCommand.CommandText = @"SELECT id_размер_упаковки, concat(длина, 'см ', ширина, 'см ', высота, 'см') as 'размер' FROM up_02_2_1.размер_упаковки;";
-                dtSizePackagingCombobox.Clear();
-                mySqlDataAdapter.Fill(dtSizePackagingCombobox);
+                ConnectionBD.mySqlCommand.CommandText = @"SELECT id_размер_упаковки, concat(длина, 'см ', ширина, 'см ', высота, 'см') as 'размер' FROM up_02_2_1.размер_упаковки;";
+                ConnectionBD.dtSizePackagingCombobox.Clear();
+                ConnectionBD.mySqlDataAdapter.Fill(ConnectionBD.dtSizePackagingCombobox);
                 return true;
             }
             catch

@@ -178,6 +178,7 @@
             this.MaximumSize = new System.Drawing.Size(672, 145);
             this.Name = "UserControl1";
             this.Size = new System.Drawing.Size(672, 145);
+            this.Load += new System.EventHandler(this.UserControl1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
