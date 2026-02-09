@@ -67,8 +67,19 @@ namespace декор
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             string typeProd = (comboBoxTipProd.SelectedValue).ToString();
-            MessageBox.Show(typeProd);
-
+            string name = textBoxName.Text;
+            string Desc = textBoxDesc.Text;
+            string minCost = textBoxMinSt.Text;
+            string sizeBox = ( comboBoxSize.SelectedValue).ToString();
+            string weightBez = textBoxWeightBez.Text;
+            string wieghtS = textBoxWeightS.Text;
+            string sert = textBoxSertificat.Text;
+            string stand = textBoxNomStand.Text;
+            string izgTime  = textBoxTimeIzg.Text;
+            string costPr = textBoxCostPrice.Text;
+            string NCech = textBoxNumDec.Text;
+            string colpeop = textBoxKolPeop.Text;
+            string size = textBoxSize.Text;
         }
     }
 }
