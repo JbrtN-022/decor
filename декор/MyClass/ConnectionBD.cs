@@ -20,6 +20,8 @@ namespace декор.MyClass
         public static DataTable dtCardList = new DataTable();
         public static DataTable dtTipProductCombobox = new DataTable(); 
              public static DataTable dtSizePackagingCombobox = new DataTable();
+        public static DataTable dtMaterialInProduct = new DataTable();
+        public static DataTable dtNameProductCombox = new DataTable();
         public static bool ConnectBd()
         {
             try

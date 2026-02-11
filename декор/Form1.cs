@@ -37,7 +37,18 @@ namespace декор
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Список_материалов form2 = new Список_материалов();
+            form2.Owner = this;
+            this.Hide();
+            form2.ShowDialog();
+        }
 
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            Список_материалов form2 = new Список_материалов();
+            form2.Owner = this;
+            this.Hide();
+            form2.ShowDialog();
         }
     }
 }

@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="MyClass\AddProduct.cs" />
     <Compile Include="MyClass\ConnectionBD.cs" />
+    <Compile Include="MyClass\MaterialInProduct.cs" />
     <Compile Include="MyClass\OutputCardProduct.cs" />
     <Compile Include="MyClass\UpdateProduct.cs" />
     <Compile Include="Program.cs" />
@@ -129,6 +130,12 @@
     <Compile Include="изменение подукции.Designer.cs">
       <DependentUpon>изменение подукции.cs</DependentUpon>
     </Compile>
+    <Compile Include="Список материалов.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Список материалов.Designer.cs">
+      <DependentUpon>Список материалов.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="изменение подукции.resx">
       <DependentUpon>изменение подукции.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Список материалов.resx">
+      <DependentUpon>Список материалов.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

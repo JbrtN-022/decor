@@ -37,7 +37,7 @@ namespace декор
             comboBoxTipProd.DisplayMember = "название_т_п";
             comboBoxTipProd.ValueMember = "id_тип_продукции";
 
-            // Загрузка данных продукта
+            
             LoadProductData();
         }
 
@@ -51,7 +51,7 @@ namespace декор
                 {
                     DataRow row = productData.Rows[0];
 
-                    // Заполнение текстовых полей
+                    
                     textBoxArt.Text = row["артикул"].ToString();
                     textBoxName.Text = row["наименование"].ToString();
                     textBoxDesc.Text = row["описание"].ToString();
@@ -66,11 +66,11 @@ namespace декор
                     textBoxKolPeop.Text = row["кол-во_чел"].ToString();
                     textBoxSize.Text = row["размер"].ToString();
 
-                    // Выбор значений в комбобоксах
+                    
                     comboBoxTipProd.SelectedValue = row["id_тип_продукции"];
                     comboBoxSize.SelectedValue = row["id_размер_упаковки"];
 
-                    // Загрузка изображения
+                    
                     string imagePath = row["изображение"].ToString();
                     if (!string.IsNullOrEmpty(imagePath))
                     {
@@ -110,7 +110,7 @@ namespace декор
         {
             try
             {
-                // 1. Проверка на заполненность всех полей
+                
                 if (!AreAllFieldsFilled())
                 {
                     MessageBox.Show("Пожалуйста, заполните все поля!",
@@ -118,7 +118,7 @@ namespace декор
                     return;
                 }
 
-                // 2. Проверка артикула (не длиннее 6 символов)
+                
                 string newArticul = textBoxArt.Text.Trim();
                 if (newArticul.Length > 7)
                 {
@@ -127,7 +127,7 @@ namespace декор
                     return;
                 }
 
-                // 3. Проверка на выбор значений в комбобоксах
+               
                 if (comboBoxTipProd.SelectedValue == null || comboBoxSize.SelectedValue == null)
                 {
                     MessageBox.Show("Пожалуйста, выберите тип продукции и размер упаковки!",
@@ -135,7 +135,7 @@ namespace декор
                     return;
                 }
 
-                // 4. Получение и проверка числовых значений
+                
                 if (!decimal.TryParse(textBoxCostPrice.Text.Trim().Replace(',', '.'),
     System.Globalization.NumberStyles.Any,
     System.Globalization.CultureInfo.InvariantCulture,
@@ -186,7 +186,7 @@ namespace декор
                     return;
                 }
 
-                // 5. Проверка: себестоимость не больше минимальной цены
+               
                 if (sebestoimost >= minCost)
                 {
                     MessageBox.Show("Себестоимость не должна быть больше или равна минимальной стоимости!",
@@ -194,7 +194,7 @@ namespace декор
                     return;
                 }
 
-                // 6. Проверка: вес без упаковки меньше веса с упаковкой
+                
                 if (weightBez >= weightS)
                 {
                     MessageBox.Show("Вес без упаковки должен быть меньше веса с упаковкой!",
@@ -202,14 +202,14 @@ namespace декор
                     return;
                 }
 
-                // Преобразование чисел в формат с точкой для SQL
+                
                 string minCostStr = minCost.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 string sebestoimostStr = sebestoimost.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 string weightBezStr = weightBez.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 string weightSStr = weightS.ToString(System.Globalization.CultureInfo.InvariantCulture);
                 string sizeStr = size.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-                // Получение значений
+                
                 string typeProd = comboBoxTipProd.SelectedValue.ToString();
                 string name = textBoxName.Text.Trim();
                 string desc = textBoxDesc.Text.Trim();
@@ -220,16 +220,16 @@ namespace декор
                 string NCech = textBoxNumDec.Text.Trim();
                 string colpeop = textBoxKolPeop.Text.Trim();
 
-                // Сохранение изображения
+                
                 string savedImagePath = currentImagePath;
                 if (!string.IsNullOrEmpty(selectedPhotoPath))
                 {
                     savedImagePath = SaveImageToProjectFolder(selectedPhotoPath, newArticul);
                 }
 
-                // Вызов метода обновления продукта
+                
                 bool result = UpdateProduct.UpdateCard(
-                    articul, // старый артикул для поиска
+                    articul, 
                     newArticul,
                     typeProd,
                     name,

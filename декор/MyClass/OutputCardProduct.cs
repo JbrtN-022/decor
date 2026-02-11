@@ -43,7 +43,6 @@ namespace декор.MyClass
                         float razmer = reader["размер"] == DBNull.Value ? 0f : Convert.ToSingle(reader["размер"]);
                         float cost = reader["стоимость_материалов"] == DBNull.Value ? 0f : Convert.ToSingle(reader["стоимость_материалов"]);
 
-                        // Форматирование с 2 знаками после запятой
                         string minCostFormatted = minCost.ToString("F2");
                         string razmerFormatted = razmer.ToString("F2");
                         string costFormatted = cost.ToString("F2");

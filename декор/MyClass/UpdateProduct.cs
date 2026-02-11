@@ -102,7 +102,6 @@ namespace декор.MyClass
                     updateCommand.Parameters.AddWithValue("@desc", desc);
                     updateCommand.Parameters.AddWithValue("@image", img);
 
-                    // Для decimal полей используем decimal параметры
                     if (decimal.TryParse(mincost.Replace(',', '.'),
                         System.Globalization.NumberStyles.Any,
                         System.Globalization.CultureInfo.InvariantCulture,
@@ -117,7 +116,7 @@ namespace декор.MyClass
 
                     updateCommand.Parameters.AddWithValue("@razmerUp", razmerup);
 
-                    // Вес без упаковки
+                   
                     if (decimal.TryParse(vesbezup.Replace(',', '.'),
                         System.Globalization.NumberStyles.Any,
                         System.Globalization.CultureInfo.InvariantCulture,
@@ -130,7 +129,7 @@ namespace декор.MyClass
                         updateCommand.Parameters.AddWithValue("@VesBezUp", vesbezup);
                     }
 
-                    // Вес с упаковкой
+                   
                     if (decimal.TryParse(vessup.Replace(',', '.'),
                         System.Globalization.NumberStyles.Any,
                         System.Globalization.CultureInfo.InvariantCulture,
@@ -147,7 +146,7 @@ namespace декор.MyClass
                     updateCommand.Parameters.AddWithValue("@NStand", n_standart);
                     updateCommand.Parameters.AddWithValue("@TimeIzg", vremaizg);
 
-                    // Себестоимость
+                  
                     if (decimal.TryParse(sebestoim.Replace(',', '.'),
                         System.Globalization.NumberStyles.Any,
                         System.Globalization.CultureInfo.InvariantCulture,
@@ -163,7 +162,7 @@ namespace декор.MyClass
                     updateCommand.Parameters.AddWithValue("@NCeha", n_ceh);
                     updateCommand.Parameters.AddWithValue("@KolVoPeop", colvo_peop);
 
-                    // Размер (float)
+                   
                     if (float.TryParse(razmer.Replace(',', '.'),
                         System.Globalization.NumberStyles.Any,
                         System.Globalization.CultureInfo.InvariantCulture,
