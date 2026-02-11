@@ -36,6 +36,25 @@ namespace декор
             labelWeight.Text = razmer;
  
         }
+        private void UserControl1_Click(object sender, EventArgs e)
+        {
+
+            изменение_подукции form1 = new изменение_подукции(articul);
+
+            // Получаем родительскую форму
+            Form parentForm = this.FindForm();
+
+            if (parentForm != null)
+            {
+                form1.Owner = parentForm;
+                parentForm.Hide();
+                form1.ShowDialog();
+            }
+            else
+            {
+                form1.ShowDialog();
+            }
+        }
 
         private void label7_Click(object sender, EventArgs e)
         {
@@ -45,6 +64,11 @@ namespace декор
         private void UserControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void UserControl1_DoubleClick(object sender, EventArgs e)
+        {
+            UserControl1_Click(sender, e);
         }
     }
 }

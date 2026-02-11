@@ -29,7 +29,15 @@ namespace декор
         private void button1_Click(object sender, EventArgs e)
         {
             добавление_продукции form1 = new добавление_продукции();
+            form1.Owner = this;
+            this.Hide();
             form1.ShowDialog();
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -18,8 +18,12 @@ namespace декор
         {
             InitializeComponent();
         }
+
         public string fileImage = string.Empty;
         private string selectedPhotoPath = "";
+        private string relativeImagePath = string.Empty;
+        private string imagesFolder = "Images";
+
         private void добавление_продукции_Load(object sender, EventArgs e)
         {
             OutputCardProduct.TipProductCombobox();
@@ -35,19 +39,6 @@ namespace декор
             comboBoxTipProd.ValueMember = "id_тип_продукции";
             comboBoxTipProd.Text = null;
         }
-        private string relativeImagePath = string.Empty;
-
-        // Папка для хранения изображений внутри папки приложения
-        private string imagesFolder = "Images";
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -58,14 +49,13 @@ namespace декор
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     selectedPhotoPath = ofd.FileName;
-
                     pictureBox1.Image = Image.FromFile(selectedPhotoPath);
                 }
             }
         }
+
         private bool AreAllFieldsFilled()
         {
-            // Проверка всех текстовых полей
             if (string.IsNullOrWhiteSpace(textBoxArt?.Text) ||
                 string.IsNullOrWhiteSpace(textBoxName?.Text) ||
                 string.IsNullOrWhiteSpace(textBoxDesc?.Text) ||
@@ -83,13 +73,11 @@ namespace декор
                 return false;
             }
 
-            // Проверка комбобоксов
             if (comboBoxTipProd.SelectedValue == null || comboBoxSize.SelectedValue == null)
             {
                 return false;
             }
 
-            // Проверка наличия изображения
             if (string.IsNullOrEmpty(selectedPhotoPath))
             {
                 return false;
@@ -97,10 +85,36 @@ namespace декор
 
             return true;
         }
+
+        private string SaveImageToProjectFolder(string sourcePath, string articul)
+        {
+            try
+            {
+                string imagesFolderPath = Path.Combine(Application.StartupPath, imagesFolder);
+                if (!Directory.Exists(imagesFolderPath))
+                {
+                    Directory.CreateDirectory(imagesFolderPath);
+                }
+
+                string extension = Path.GetExtension(sourcePath);
+                string fileName = $"{articul}_{DateTime.Now:yyyyMMddHHmmss}{extension}";
+                string destPath = Path.Combine(imagesFolderPath, fileName);
+
+                File.Copy(sourcePath, destPath, true);
+                return Path.Combine(imagesFolder, fileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении изображения: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return string.Empty;
+            }
+        }
+
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 // 1. Проверка на заполненность всех полей
                 if (!AreAllFieldsFilled())
                 {
@@ -109,8 +123,8 @@ namespace декор
                     return;
                 }
 
-                // 2. Проверка артикула (не длиннее 6 символов)
-                string articul = textBoxArt.Text.Trim(); // предполагаем, что у вас есть textBoxArticul
+                // 2. Проверка артикула
+                string articul = textBoxArt.Text.Trim();
                 if (articul.Length > 7)
                 {
                     MessageBox.Show("Артикул не может быть длиннее 7 символов!",
@@ -118,7 +132,7 @@ namespace декор
                     return;
                 }
 
-                // 3. Проверка на выбор значений в комбобоксах
+                // 3. Проверка комбобоксов
                 if (comboBoxTipProd.SelectedValue == null || comboBoxSize.SelectedValue == null)
                 {
                     MessageBox.Show("Пожалуйста, выберите тип продукции и размер упаковки!",
@@ -126,60 +140,67 @@ namespace декор
                     return;
                 }
 
-                // 4. Проверка наличия картинки
-                if (string.IsNullOrEmpty(selectedPhotoPath))
-                {
-                    MessageBox.Show("Пожалуйста, выберите изображение для продукта!",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // 5. Получение и проверка числовых значений
-                if (!decimal.TryParse(textBoxCostPrice.Text.Trim(), out decimal sebestoimost))
+                // 4. Проверка числовых значений с поддержкой запятой
+                if (!decimal.TryParse(textBoxCostPrice.Text.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out decimal sebestoimostValue))
                 {
                     MessageBox.Show("Себестоимость должна быть числом!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!decimal.TryParse(textBoxMinSt.Text.Trim(), out decimal minCost))
+                if (!decimal.TryParse(textBoxMinSt.Text.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out decimal minCostValue))
                 {
                     MessageBox.Show("Минимальная стоимость должна быть числом!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!decimal.TryParse(textBoxWeightBez.Text.Trim(), out decimal weightBez))
+                if (!decimal.TryParse(textBoxWeightBez.Text.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out decimal weightBezValue))
                 {
                     MessageBox.Show("Вес без упаковки должен быть числом!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!decimal.TryParse(textBoxWeightS.Text.Trim(), out decimal weightS))
+                if (!decimal.TryParse(textBoxWeightS.Text.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out decimal weightSValue))
                 {
                     MessageBox.Show("Вес с упаковкой должен быть числом!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (!float.TryParse(textBoxSize.Text.Trim(), out float size))
+                if (!float.TryParse(textBoxSize.Text.Trim().Replace(',', '.'),
+                    System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out float sizeValue))
                 {
                     MessageBox.Show("Размер должен быть числом с плавающей точкой!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // 6. Проверка: себестоимость не больше минимальной цены
-                if (sebestoimost >= minCost)
+                // 5. Проверка: себестоимость не больше минимальной цены
+                if (sebestoimostValue >= minCostValue)
                 {
                     MessageBox.Show("Себестоимость не должна быть больше или равна минимальной стоимости!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // 7. Проверка: вес без упаковки меньше веса с упаковкой
-                if (weightBez >= weightS)
+                // 6. Проверка: вес без упаковки меньше веса с упаковкой
+                if (weightBezValue >= weightSValue)
                 {
                     MessageBox.Show("Вес без упаковки должен быть меньше веса с упаковкой!",
                         "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -197,8 +218,15 @@ namespace декор
                 string NCech = textBoxNumDec.Text.Trim();
                 string colpeop = textBoxKolPeop.Text.Trim();
 
-            
-               
+                // Сохранение изображения
+                string savedImagePath = SaveImageToProjectFolder(selectedPhotoPath, articul);
+
+                // Форматирование чисел для SQL
+                string minCostStr = minCostValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                string sebestoimostStr = sebestoimostValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                string weightBezStr = weightBezValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                string weightSStr = weightSValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                string sizeStr = sizeValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                 // Вызов метода добавления продукта
                 bool result = AddProduct.InsertCard(
@@ -206,24 +234,27 @@ namespace декор
                     typeProd,
                     name,
                     desc,
-                    relativeImagePath,
-                    minCost.ToString(),
+                    savedImagePath,
+                    minCostStr,
                     sizeBox,
-                    weightBez.ToString(),
-                    weightS.ToString(),
+                    weightBezStr,
+                    weightSStr,
                     sert,
                     stand,
                     izgTime,
-                    sebestoimost.ToString(),
+                    sebestoimostStr,
                     NCech,
                     colpeop,
-                    size.ToString()
+                    sizeStr
                 );
 
                 if (result)
                 {
                     MessageBox.Show("Продукт успешно добавлен!", "Успех",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Возвращаемся на главную форму
+                    this.Owner?.Show();
                     this.Close();
                 }
                 else
@@ -231,15 +262,12 @@ namespace декор
                     MessageBox.Show("Не удалось добавить продукт!", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Ошибка при добавлении продукта: {ex.Message}",
-            //        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-
-
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при добавлении продукта: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

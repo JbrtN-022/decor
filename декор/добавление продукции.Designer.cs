@@ -72,7 +72,7 @@
             this.textBoxArt.Name = "textBoxArt";
             this.textBoxArt.Size = new System.Drawing.Size(242, 26);
             this.textBoxArt.TabIndex = 0;
-            this.textBoxArt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+         
             // 
             // comboBoxSize
             // 

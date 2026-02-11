@@ -179,6 +179,8 @@
             this.Name = "UserControl1";
             this.Size = new System.Drawing.Size(672, 145);
             this.Load += new System.EventHandler(this.UserControl1_Load);
+            this.Click += new System.EventHandler(this.UserControl1_Click);
+            this.DoubleClick += new System.EventHandler(this.UserControl1_DoubleClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 
